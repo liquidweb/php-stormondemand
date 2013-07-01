@@ -58,11 +58,33 @@
 	
 	function cleanArrayDisp($array)
 	{
+		global $path; // For when things get... recursive
+		
+		static $path_idx = 0; // Keepin it real - for all of it
+		
 		foreach($array as $key => $value)
 		{
 			if(!is_array($value))
 			{
-				echo '[' . $key . ']' . "=> " . $value . "\n";
+				if($path_idx > 0) // Let's show where this value falls in the scheme of things
+				{
+					echo '[';
+					echo implode("][", $path);
+					echo ']';
+				}
+				echo '[' . $key . ']' . " => " . $value . "\n";
+			}
+			elseif(is_array($value)) // Recursion time!
+			{
+				$path_idx++; // Increment the path index
+				$path[$path_idx] = $key;
+				
+				cleanArrayDisp($value);
+				
+				unset($path[$path_idx]); // Cleanup
+				$path_idx--;
+				
+				echo "\n"; // Space = happy
 			}
 		}
 	}
