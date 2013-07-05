@@ -59,8 +59,12 @@
 				{
 					fwrite($logging['handle'], $storm->debug_info()); // Head up the output with the debug information
 					fwrite($logging['handle'], "\n\n"); // Whitespace makes people happy
+					cleanArrayDisp($storm->request(), $logging); // Done this way so the file handler gets passed into the function
 				}
-				cleanArrayDisp($storm->request());
+				else
+				{
+					cleanArrayDisp($storm->request());
+				}
 				break;
 			case 5:
 				if(!isset($logging))
@@ -76,7 +80,7 @@
 				}
 				break;
 			case 6:
-				echo "\n\n";
+				echo "\n";
 				$stop = TRUE;
 				break;
 			default:
@@ -85,7 +89,7 @@
 		}
 	}
 	
-	function cleanArrayDisp($array)
+	function cleanArrayDisp($array, $log_array = FALSE)
 	{
 		global $path; // For when things get... recursive
 		
@@ -97,10 +101,10 @@
 			{
 				if($path_idx > 0) // Let's show where this value falls in the scheme of things
 				{
-					if(isset($logging)) // If logging is enabled
+					if($log_array != FALSE) // If logging is enabled
 					{
 						$line = '[' . implode("][", $path) . ']';
-						fwrite($logging['handle'], $line);
+						fwrite($log_array['handle'], $line);
 						echo $line;
 						unset($line);
 					}
@@ -109,10 +113,10 @@
 						echo '[' . implode("][", $path) . ']';
 					}
 				}
-				if(isset($logging)) // If logging is enabled
+				if($log_array != FALSE) // If logging is enabled
 				{
 					$line = '[' . $key . ']' . " => " . $value . "\n";
-					fwrite($logging['handle'], $line);
+					fwrite($log_array['handle'], $line);
 					echo $line;
 					unset($line);
 				}
