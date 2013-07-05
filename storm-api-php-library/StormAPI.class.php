@@ -23,7 +23,7 @@
 	{
 		// Let's define attributes
 		private $api_user, $api_pass, $base_url, $api_format, $api_full_uri, $api_request;
-		private $api_request_body, $api_method, $api_params, $api_return, $api_version; 
+		private $api_request_body, $api_method, $api_params, $api_return, $api_version, $api_port; 
 		
 		/**
 		 * 
@@ -41,10 +41,12 @@
 			//$this->version = $api_version;
 			$this->base_url = 'https://api.stormondemand.com/';
 			$this->api_format = 'json';
+			$this->api_port = 443;
 			
 			$this->api_full_uri = $this->base_url . "v" . $api_version . "/" . $api_method . "." . $this->api_format;
 			$this->api_request = curl_init($this->api_full_uri); // Instantiate
 			curl_setopt($this->api_request, CURLOPT_RETURNTRANSFER, TRUE); // Don't dump directly to output
+			curl_setopt($this->api_request, CURLOPT_PORT, $this->api_port); // The port to call to.
 			curl_setopt($this->api_request, CURLOPT_SSL_VERIFYPEER, TRUE); // It does look like verification works now.
 			curl_setopt($this->api_request, CURLOPT_USERPWD, "$api_user:$api_pass"); // Pass the creds
 		}
@@ -91,6 +93,26 @@
 			$this->api_full_uri = $this->base_url . $this->api_method . "." .$this->api_format; // New URI since method change
 			curl_setopt($this->api_request, CURLOPT_URL, $this->api_full_uri);
 			
+		}
+		
+		/**
+		 * 
+		 * This method will return the server, port, method, and parameters set
+		 * 
+		 * @return string Returns a string containing the server, port, method, and parameters currently set
+		 */
+		function debug_info()
+		{
+			$this->debug_vars = "Full URI: " . $this->api_full_uri . "\n";
+			$this->debug_vars .= "Port: " . $this->api_port . "\n";
+			$this->debug_vars .= "Parameters as follows: \n";
+			foreach($this->api_params['params'] as $par_key => $par_value)
+			{
+				$this->debug_vars .= $par_key . " => " . $par_value . "\n";  
+			}
+			$this->debug_vars .= "=== End Params ===\n";
+			
+			return $this->debug_vars;
 		}
 		
 		/**
