@@ -131,7 +131,14 @@
 				$path_idx++; // Increment the path index
 				$path[$path_idx] = $key;
 				
-				cleanArrayDisp($value);
+				if($log_array != FALSE)
+				{
+					cleanArrayDisp($value, $log_array);
+				}
+				else
+				{
+					cleanArrayDisp($value);
+				}
 				
 				unset($path[$path_idx]); // Cleanup
 				$path_idx--;
