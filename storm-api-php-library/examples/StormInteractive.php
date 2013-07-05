@@ -23,7 +23,7 @@
 		// Get logging status
 		if(isset($logging))
 		{
-			$logStatus = "(Currently Active " . $logging['file'] . ")\n";
+			$logStatus = "(Currently Active " . $logging['filename'] . ")\n";
 		}
 		else
 		{
@@ -58,7 +58,7 @@
 				if(isset($logging))
 				{
 					fwrite($logging['handle'], $storm->debug_info()); // Head up the output with the debug information
-					fwrite($logging['hanlde'], "\n\n"); // Whitespace makes people happy
+					fwrite($logging['handle'], "\n\n"); // Whitespace makes people happy
 				}
 				cleanArrayDisp($storm->request());
 				break;
@@ -66,7 +66,7 @@
 				if(!isset($logging))
 				{
 					$logging['filename'] = date('His - dMy') . ".txt";
-					$logging['handle'] = fopen($logging['filename'], 'r+');
+					$logging['handle'] = fopen($logging['filename'], 'w+');
 				}
 				else
 				{

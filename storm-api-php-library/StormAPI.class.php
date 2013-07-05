@@ -106,10 +106,19 @@
 			$this->debug_vars = "Full URI: " . $this->api_full_uri . "\n";
 			$this->debug_vars .= "Port: " . $this->api_port . "\n";
 			$this->debug_vars .= "Parameters as follows: \n";
-			foreach($this->api_params['params'] as $par_key => $par_value)
+			
+			if(isset($this->api_request_body))
 			{
-				$this->debug_vars .= $par_key . " => " . $par_value . "\n";  
+				foreach($this->api_request_body['params'] as $par_key => $par_value)
+				{
+					$this->debug_vars .= $par_key . " => " . $par_value . "\n";
+				}
 			}
+			else
+			{
+				$this->debug_vars .= "No Parameters\n";
+			}
+			
 			$this->debug_vars .= "=== End Params ===\n";
 			
 			return $this->debug_vars;
