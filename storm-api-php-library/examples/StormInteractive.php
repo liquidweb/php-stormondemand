@@ -58,8 +58,9 @@
 				if(isset($logging))
 				{
 					fwrite($logging['handle'], $storm->debug_info()); // Head up the output with the debug information
-					fwrite($logging['handle'], "\n\n"); // Whitespace makes people happy
+					fwrite($logging['handle'], "\n"); // Whitespace makes people happy
 					cleanArrayDisp($storm->request(), $logging); // Done this way so the file handler gets passed into the function
+					fwrite($logging['handle'], "\n\n"); // More whitespace happiness
 				}
 				else
 				{
