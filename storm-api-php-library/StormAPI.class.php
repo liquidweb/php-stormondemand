@@ -111,7 +111,14 @@
 			{
 				foreach($this->api_request_body['params'] as $par_key => $par_value)
 				{
-					$this->debug_vars .= $par_key . " => " . $par_value . "\n";
+					if($is_array($par_value))
+					{
+						$this->debug_vars .= $par_key . "=>" . print_r($par_value, TRUE);
+					}
+					else
+					{
+						$this->debug_vars .= $par_key . " => " . $par_value . "\n";
+					}
 				}
 			}
 			else
