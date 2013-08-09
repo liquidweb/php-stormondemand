@@ -30,10 +30,10 @@
 		 * @param string $api_user The Storm API User
 		 * @param string $api_pass The API User's Password
 		 * @param string $api_method The Storm API Method being called. Example: "server/list"
-		 * @param int $api_version The API version to use. Defaults to 1
+		 * @param int $api_version The API version to use. Defaults to v1
 		 * 
 		 */
-		function __construct($api_user, $api_pass, $api_method, $api_version = "1")
+		function __construct($api_user, $api_pass, $api_method, $api_version = "v1")
 		{	
 			//$this->api_user = $api_user;
 			//$this->api_pass = $api_pass;
@@ -43,7 +43,7 @@
 			$this->api_format = 'json';
 			$this->api_port = 443;
 			
-			$this->api_full_uri = $this->base_url . "v" . $api_version . "/" . $api_method . "." . $this->api_format;
+			$this->api_full_uri = $this->base_url . $api_version . "/" . $api_method . "." . $this->api_format;
 			$this->api_request = curl_init($this->api_full_uri); // Instantiate
 			curl_setopt($this->api_request, CURLOPT_RETURNTRANSFER, TRUE); // Don't dump directly to output
 			curl_setopt($this->api_request, CURLOPT_PORT, $this->api_port); // The port to call to.
