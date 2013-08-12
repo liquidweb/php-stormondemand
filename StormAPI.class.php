@@ -42,6 +42,7 @@
 			$this->base_url = 'https://api.stormondemand.com/';
 			$this->api_format = 'json';
 			$this->api_port = 443;
+			define("API_VERSION", $api_version);
 			
 			$this->api_full_uri = $this->base_url . $api_version . "/" . $api_method . "." . $this->api_format;
 			$this->api_request = curl_init($this->api_full_uri); // Instantiate
@@ -129,6 +130,28 @@
 			$this->debug_vars .= "=== End Params ===\n";
 			
 			return $this->debug_vars;
+		}
+		
+		/**
+		 *
+		 * This method will return a list of available API methods
+		 *
+		 * @param string $docVersion The version of the API being used. Defaults to the version of the API specified upon construction
+		 * @return array Returns an array of the available API methods based on the version supplied
+		 */
+		function listMethods($docVersion = API_VERSION)
+		{
+			$this->api_docs = file_get_contents("http://www.liquidweb.com/StormServers/api/docs/" . $docVersion . "/docs.json");
+			$this->api_docs = json_decode($this->api_docs, TRUE);
+		
+			foreach($this->api_docs as $groupName => $group)
+			{
+				foreach($group['__methods'] as $methodName => $methodSpecs)
+				{
+					$this->methodList[$groupName][] = $methodName;
+				}
+			}
+			return $this->methodList;
 		}
 		
 		/**
