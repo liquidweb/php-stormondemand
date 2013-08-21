@@ -30,7 +30,7 @@
 		 * @param string $apiUser The Storm API User
 		 * @param string $apiPass The API User's Password
 		 * @param string $apiMethod The Storm API Method being called. Example: "server/list"
-		 * @param int $apiVersion The API version to use. Defaults to v1
+		 * @param string $apiVersion The API version to use. Defaults to v1
 		 * 
 		 */
 		function __construct($apiUser, $apiPass, $apiMethod, $apiVersion = "v1")
