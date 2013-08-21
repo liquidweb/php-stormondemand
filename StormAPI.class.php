@@ -94,7 +94,6 @@
 			$this->apiMethod = $apiMethod; // New method, coming right up!
 			$this->apiFullUri = $this->baseUrl . $this->apiMethod . "." .$this->apiFormat; // New URI since method change
 			curl_setopt($this->apiRequest, CURLOPT_URL, $this->apiFullUri);
-			
 		}
 		
 		/**

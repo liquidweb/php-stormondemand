@@ -43,21 +43,21 @@
 		{
 			case 1:
 				echo "\nEnter your new method: "; $api_method = trim(fgets(STDIN));
-				$storm->new_method($api_method);
+				$storm->newMethod($api_method);
 				break;
 			case 2:
 				echo "\nEnter the parameter: "; $parameter = trim(fgets(STDIN));
 				echo "\nEnter the value: "; $value = trim(fgets(STDIN));
-				$storm->add_param($parameter, $value);
+				$storm->addParam($parameter, $value);
 				unset($parameter, $value);
 				break;
 			case 3:
-				$storm->clear_params();
+				$storm->clearParams();
 				break;
 			case 4:
 				if(isset($logging))
 				{
-					fwrite($logging['handle'], $storm->debug_info()); // Head up the output with the debug information
+					fwrite($logging['handle'], $storm->debugInfo()); // Head up the output with the debug information
 					fwrite($logging['handle'], "\n"); // Whitespace makes people happy
 					cleanArrayDisp($storm->request(), $logging); // Done this way so the file handler gets passed into the function
 					fwrite($logging['handle'], "\n\n"); // More whitespace happiness
