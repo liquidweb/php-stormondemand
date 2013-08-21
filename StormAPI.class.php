@@ -55,12 +55,42 @@
 		 * 
 		 * @param string $parameter The parameter for the Storm API Method
 		 * @param string $value The value of the parameter
-		 * @return array Appends the parameter and value to the array being used for storing the API method's parameters
+		 * @return array Appends the parameter and value to the array being used for storing the API method's parameters, or over writes if already set
 		 * 
 		 */
 		function addParam($parameter, $value)
 		{
 			$this->apiRequestBody['params'][$parameter] = $value;
+		}
+		
+		/**
+		 * 
+		 * @param string $parameter The Storm API Method's parameter that you want to remove
+		 * @return bool Will return TRUE if successful, FALSE if not (such as the parameter didn't actually exist) 
+		 */
+		function removeParam($parameter)
+		{
+			if(isset($this->apiRequestBody['params'][$parameter]))
+			{
+				unset($this->apiRequestBody['params'][$parameter]);
+				return TRUE;
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * 
+		 * @return array|bool Returns an array of the currently set parameters, FALSE if none are set
+		 */
+		function listParams()
+		{
+			if(isset($this->apiRequestBody['params']))
+			{
+				return $this->apiRequestBody['params'];
+			}
 		}
 		
 		/**
@@ -98,7 +128,7 @@
 		
 		/**
 		 * 
-		 * This method will return the server, port, method, and parameters set
+		 * This method will return the server, port, method, and parameters set - general debugging stuff
 		 * 
 		 * @return string Returns a string containing the server, port, method, and parameters currently set
 		 */

@@ -6,7 +6,7 @@
 	 * 	Hope it's useful!
 	 */
 
-	require_once('StormAPI.class.php');
+	require_once('../StormAPI.class.php'); // Edit location as needed
 	
 	// Initial information
 	// echo "\nAPI Username: "; $api_user = trim(fgets(STDIN));
