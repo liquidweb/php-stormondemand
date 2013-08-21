@@ -9,5 +9,4 @@ Usage is relatively straight forward.
 
 Take a look at examples/serverlisting.php to see the basics of using the library.
 
-Additionally, StormAPI.class.php utilizes PHPDoc for friendly generation of documentation for the library.
-This of course is also handy for certain IDEs, such as Eclipse when using PDT.
+StormAPI.class.php utilizes PHPDoc for friendly use of the library when using an IDE such as Eclipse with PHP Development tools. Additionally, phpdoc can be run against it as well if you like that sort of thing.
