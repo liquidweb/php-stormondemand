@@ -250,7 +250,7 @@
 		
 		/**
 		 *
-		 * This method will return a list of available API methods
+		 * This method will return a list of available API methods for the API version in use
 		 *
 		 * @return array Returns an array of the available API methods based on the version supplied
 		 */
