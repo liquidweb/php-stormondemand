@@ -37,6 +37,7 @@
 		echo "4. Clear ALL parameters \n";
 		echo "5. Execute request and display \n";
 		echo "6. Toggle logging " . $logStatus;
+		echo "7. List available methods\n";
 		echo "9. Get me out of here \n";
 		echo "Enter a number: "; fscanf(STDIN, "%d\n", $choice); // Get the choice
 		
