@@ -9,13 +9,13 @@
 	require_once('../StormAPI.class.php'); // Edit location as needed
 	
 	// Initial information
-	// echo "\nAPI Username: "; $api_user = trim(fgets(STDIN));
-	// echo "Password: "; $api_pass = trim(fgets(STDIN));
-	$api_user = 'user';
-	$api_pass = 'pass';
+	// echo "\nAPI Username: "; $apiUser = trim(fgets(STDIN));
+	// echo "Password: "; $apiPass = trim(fgets(STDIN));
+	$apiUser = 'user';
+	$apiPass = 'pass';
 	echo "Initial Method: "; $api_method = trim(fgets(STDIN));
 	
-	$storm = new StormAPI($api_user, $api_pass, $api_method);
+	$storm = new StormAPI($apiUser, $apiPass, $api_method);
 	
 	// Menu
 	while(!isset($stop))
@@ -31,12 +31,13 @@
 		}
 		
 		echo "\n\nPick your poison... \n";
-		echo "1. Change method (will clear params) \n";
+		echo "1. Change method (will clear all params) \n";
 		echo "2. Add parameter \n";
-		echo "3. Clear parameters \n";
-		echo "4. Execute request and display \n";
-		echo "5. Toggle logging " . $logStatus;
-		echo "6. Get me out of here \n";
+		echo "3. List currently set parameters \n";
+		echo "4. Clear ALL parameters \n";
+		echo "5. Execute request and display \n";
+		echo "6. Toggle logging " . $logStatus;
+		echo "9. Get me out of here \n";
 		echo "Enter a number: "; fscanf(STDIN, "%d\n", $choice); // Get the choice
 		
 		switch($choice)
@@ -52,9 +53,20 @@
 				unset($parameter, $value);
 				break;
 			case 3:
-				$storm->clearParams();
+				echo "\nCurrently set parameters: \n";
+				if($storm->listParams())
+				{
+					cleanArrayDisp($storm->listParams());
+				}
+				else
+				{
+					echo "No parameters are currently set\n";
+				}
 				break;
 			case 4:
+				$storm->clearParams();
+				break;
+			case 5:
 				if(isset($logging))
 				{
 					fwrite($logging['handle'], $storm->debugInfo()); // Head up the output with the debug information
@@ -67,10 +79,10 @@
 					cleanArrayDisp($storm->request());
 				}
 				break;
-			case 5:
+			case 6:
 				if(!isset($logging))
 				{
-					$logging['filename'] = date('His - dMy') . ".txt";
+					$logging['filename'] = date('His - dMy') . ".log";
 					$logging['handle'] = fopen($logging['filename'], 'w+');
 				}
 				else
@@ -80,7 +92,11 @@
 					unset($logging);
 				}
 				break;
-			case 6:
+			case 7:
+				echo "Available methods:\n";
+				cleanArrayDisp($storm->listMethods());
+				break;
+			case 9:
 				echo "\n";
 				$stop = TRUE;
 				break;
@@ -143,7 +159,8 @@
 				unset($path[$path_idx]); // Cleanup
 				$path_idx--;
 				
-				echo "\n"; // Space = happy
+				// Uncomment the following line to have some breaks in the output
+				//echo "\n"; // Space = happy
 			}
 		}
 	}

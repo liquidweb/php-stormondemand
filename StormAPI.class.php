@@ -87,9 +87,13 @@
 		 */
 		function listParams()
 		{
-			if(isset($this->apiRequestBody['params']))
+			if(count($this->apiRequestBody['params']) > 0)
 			{
 				return $this->apiRequestBody['params'];
+			}
+			else
+			{
+				return FALSE;
 			}
 		}
 		
