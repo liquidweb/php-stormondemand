@@ -105,7 +105,7 @@
 		function clearParams()
 		{
 			unset($this->apiRequestBody);
-			$this->apiRequestBody['params'] = array(); // Initialize blank, so that a warning doesn't get thrown about the array being undefined
+			$this->apiRequestBody= TRUE; // Initialize blank, so that a warning doesn't get thrown about the array being undefined
 			curl_setopt($this->apiRequest, CURLOPT_HTTPGET, TRUE); //If the request was previously run with params, this cleans those out. Otherwise they go back with the request
 		}
 		
@@ -121,7 +121,7 @@
 			if($clearparams == TRUE)
 			{
 				unset($this->apiRequestBody);
-				$this->apiRequestBody['params'] = array(); // Initialize blank, so that a warning doesn't get thrown about the array being undefined
+				$this->apiRequestBody = TRUE; // Initialize blank, so that a warning doesn't get thrown about the array being undefined
 				curl_setopt($this->apiRequest, CURLOPT_HTTPGET, TRUE); //If the request was previously run with params, this cleans those out. Otherwise they go back with the request
 			}
 			
