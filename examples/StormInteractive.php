@@ -38,6 +38,7 @@
 		echo "5. Execute request and display \n";
 		echo "6. Toggle logging " . $logStatus;
 		echo "7. List available methods\n";
+		echo "8. List parameters for current method\n";
 		echo "9. Get me out of here \n";
 		echo "Enter a number: "; fscanf(STDIN, "%d\n", $choice); // Get the choice
 		
@@ -96,6 +97,9 @@
 			case 7:
 				echo "Available methods:\n";
 				cleanArrayDisp($storm->listMethods());
+				break;
+			case 8:
+				cleanArrayDisp($storm->listMethodParams());
 				break;
 			case 9:
 				echo "\n";
