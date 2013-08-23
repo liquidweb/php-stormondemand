@@ -78,7 +78,7 @@
 				unset($this->apiRequestBody['params'][$parameter]);
 				if(count($this->apiRequestBody['params']) == 0) // Unset ['params'] as well so POST isn't used down the road if that was the last param
 				{
-					clearParams();
+					$this->clearParams();
 				}
 				return TRUE;
 			}
@@ -205,7 +205,7 @@
 		{
 			if($clearparams == TRUE)
 			{
-				clearParams();
+				$this->clearParams();
 			}
 			
 			$this->apiMethod = $apiMethod; // New method, coming right up!
