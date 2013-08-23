@@ -76,6 +76,10 @@
 			if(isset($this->apiRequestBody['params'][$parameter]))
 			{
 				unset($this->apiRequestBody['params'][$parameter]);
+				if(count($this->apiRequestBody['params']) == 0) // Unset ['params'] as well so POST isn't used down the road if that was the last param
+				{
+					clearParams();
+				}
 				return TRUE;
 			}
 			else
@@ -186,7 +190,7 @@
 		function clearParams()
 		{
 			unset($this->apiRequestBody);
-			$this->apiRequestBody = TRUE; // Initialize blank, so that a warning doesn't get thrown about the array being undefined
+			$this->apiRequestBody = array(); // Initialize blank, so that a warning doesn't get thrown about the array being undefined
 			curl_setopt($this->apiRequest, CURLOPT_HTTPGET, TRUE); //If the request was previously run with params, this cleans those out. Otherwise they go back with the request
 		}
 		
@@ -201,9 +205,7 @@
 		{
 			if($clearparams == TRUE)
 			{
-				unset($this->apiRequestBody);
-				$this->apiRequestBody = TRUE; // Initialize blank, so that a warning doesn't get thrown about the array being undefined
-				curl_setopt($this->apiRequest, CURLOPT_HTTPGET, TRUE); //If the request was previously run with params, this cleans those out. Otherwise they go back with the request
+				clearParams();
 			}
 			
 			$this->apiMethod = $apiMethod; // New method, coming right up!
@@ -278,7 +280,7 @@
 		 */
 		function request()
 		{
-			if(is_array($this->apiRequestBody)) // We have params
+			if(isset($this->apiRequestBody['params'])) // We have params
 			{
 				curl_setopt($this->apiRequest, CURLOPT_POST, TRUE); //POST method since we'll be feeding params
 				curl_setopt($this->apiRequest, CURLOPT_HTTPHEADER, Array('Content-type: application/json')); // Since we'll be using JSON
