@@ -1,19 +1,18 @@
 <?php
 	require_once('../StormAPI.class.php');
 	
-	$api_user = "api_user";
-	$api_pass = "api_pass";
-	$api_method = "server/list";
-	$api_version = "1";
+	$apiUser = "api_user";
+	$apiPass = "api_pass";
+	$apiMethod = "storm/server/list";
+	$apiVersion = "v1";
 	
-	$storm = new StormAPI($api_user, $api_pass, $api_method, $api_version);
+	$storm = new StormAPI($apiUser, $apiPass, $apiMethod, $apiVersion);
 	
-	$storm->add_param("page_size", "999");
+	$storm->addParam("page_size", "999");
 	$results = $storm->request();
 	
 	foreach($results['items'] as $item)
 	{
 		echo $item['domain']  . " || " . $item['uniq_id'] . "\n"; 
-	}
-	
+	}	
 ?>

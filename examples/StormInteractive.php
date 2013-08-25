@@ -39,7 +39,8 @@
 		echo "6. Toggle logging " . $logStatus;
 		echo "7. List available methods\n";
 		echo "8. List parameters for current method\n";
-		echo "9. Get me out of here \n";
+		echo "9. Remove a specific parameter\n";
+		echo "10. Get me out of here \n";
 		echo "Enter a number: "; fscanf(STDIN, "%d\n", $choice); // Get the choice
 		
 		switch($choice)
@@ -102,6 +103,34 @@
 				cleanArrayDisp($storm->listMethodParams());
 				break;
 			case 9:
+				if($storm->listParams())
+				{
+					echo "\nCurrently set parameters: \n";
+					$i = 0;
+					foreach($storm->listParams() as $paramName => $paramValue)
+					{
+						$paramIndex[$i] = $paramName;
+						echo $i . ". " . $paramName . " => " . $paramValue . "\n";
+						$i++;
+					}
+					unset($i);
+					echo "\nEnter the number of the parameter you would like to clear (enter anything else to cancel): "; fscanf(STDIN, "%d\n", $choice);
+					if(isset($paramIndex[$choice])) // Valid choice
+					{
+						$storm->removeParam($paramIndex[$choice]);
+					}
+					else
+					{
+						echo "Not a valid choice. Canceling the operation.\n";
+					}
+					unset($paramIndex);
+				}
+				else
+				{
+					echo "No parameters are currently set\n";
+				}
+				break;
+			case 10:
 				echo "\n";
 				$stop = TRUE;
 				break;
