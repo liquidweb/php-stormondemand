@@ -50,6 +50,9 @@ PHPDoc blocks are utilized so that code hinting can be used if your IDE supports
 The following is just a quick summary of methods that the library provides,
 their functions, and their parameters.
 
+**bulkParams($paramsArray)**
+Allows the passing of multiple parameters via an associative array
+
 **addParam($parameter, $value)**
 Adds specifies the parameter and its value to be passed along with the API request.
 

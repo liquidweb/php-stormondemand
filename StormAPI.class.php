@@ -3,7 +3,7 @@
 	 * This file contains the StormAPI Class for working with Liquid Web's Storm Platorm API
 	 * 
 	 * @package StormAPI
-	 * @license http://opensource.org/licenses/EPL-1.0 Eclipse Public License
+	 * @license http://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
 	 * @author Jason Gillman Jr <jgillman@liquidweb.com>
 	 * 
 	 */
@@ -30,10 +30,11 @@
 		 * @param string $apiUser The Storm API User
 		 * @param string $apiPass The API User's Password
 		 * @param string $apiMethod The Storm API Method being called. Example: "server/list"
+		 * @param bool|array $paramsArray An associative array of parameters generated before instantiation. If no params to be passed at creation, pass along FALSE
 		 * @param string $apiVersion The API version to use. Defaults to v1
 		 * 
 		 */
-		function __construct($apiUser, $apiPass, $apiMethod, $apiVersion = "v1")
+		function __construct($apiUser, $apiPass, $apiMethod, $paramsArray = FALSE, $apiVersion = "v1")
 		{	
 			//$this->apiUser = $apiUser;
 			//$this->apiPass = $apiPass;
@@ -51,13 +52,37 @@
 			curl_setopt($this->apiRequest, CURLOPT_PORT, $this->apiPort); // The port to call to.
 			curl_setopt($this->apiRequest, CURLOPT_SSL_VERIFYPEER, TRUE); // It does look like verification works now.
 			curl_setopt($this->apiRequest, CURLOPT_USERPWD, "$apiUser:$apiPass"); // Pass the creds
+			
+			if(is_array($paramsArray)) // Pass along any parameters upon instantiation
+			{
+				$this->apiRequestBody['params'] = $paramsArray;
+			}
+		}
+		
+		/**
+		 * 
+		 * @param array $paramsArray An associative array of all parameters desired to be passed in
+		 * @return bool TRUE for success, FALSE for failure
+		 * 
+		 */
+		function bulkParams($paramsArray)
+		{
+			if(is_array($paramsArray))
+			{
+				$this->apiRequestBody['params'] = $paramsArray;
+				return TRUE;
+			}
+			else
+			{
+				return FALSE;
+			}
 		}
 		
 		/**
 		 * 
 		 * @param string $parameter The parameter for the Storm API Method
 		 * @param string $value The value of the parameter
-		 * @return array Appends the parameter and value to the array being used for storing the API method's parameters, or over writes if already set
+		 * @return null Appends the parameter and value to the array being used for storing the API method's parameters, or over writes if already set
 		 * 
 		 */
 		function addParam($parameter, $value)
