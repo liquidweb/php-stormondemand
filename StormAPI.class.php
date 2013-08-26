@@ -3,7 +3,7 @@
 	 * This file contains the StormAPI Class for working with Liquid Web's Storm Platorm API
 	 * 
 	 * @package StormAPI
-	 * @license http://opensource.org/licenses/EPL-1.0 Eclipse Public License
+	 * @license http://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
 	 * @author Jason Gillman Jr <jgillman@liquidweb.com>
 	 * 
 	 */
@@ -55,9 +55,28 @@
 		
 		/**
 		 * 
+		 * @param array $paramsArray An associative array of all parameters desired to be passed in
+		 * @return bool TRUE for success, FALSE for failure
+		 * 
+		 */
+		function bulkParams($paramsArray)
+		{
+			if(is_array($paramsArray))
+			{
+				$this->apiRequestBody['params'] = $paramsArray;
+				return TRUE;
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		
+		/**
+		 * 
 		 * @param string $parameter The parameter for the Storm API Method
 		 * @param string $value The value of the parameter
-		 * @return array Appends the parameter and value to the array being used for storing the API method's parameters, or over writes if already set
+		 * @return null Appends the parameter and value to the array being used for storing the API method's parameters, or over writes if already set
 		 * 
 		 */
 		function addParam($parameter, $value)
