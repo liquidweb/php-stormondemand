@@ -30,10 +30,11 @@
 		 * @param string $apiUser The Storm API User
 		 * @param string $apiPass The API User's Password
 		 * @param string $apiMethod The Storm API Method being called. Example: "server/list"
+		 * @param bool|array $paramsArray An associative array of parameters generated before instantiation. If no params to be passed at creation, pass along FALSE
 		 * @param string $apiVersion The API version to use. Defaults to v1
 		 * 
 		 */
-		function __construct($apiUser, $apiPass, $apiMethod, $apiVersion = "v1")
+		function __construct($apiUser, $apiPass, $apiMethod, $paramsArray = FALSE, $apiVersion = "v1")
 		{	
 			//$this->apiUser = $apiUser;
 			//$this->apiPass = $apiPass;
@@ -51,6 +52,11 @@
 			curl_setopt($this->apiRequest, CURLOPT_PORT, $this->apiPort); // The port to call to.
 			curl_setopt($this->apiRequest, CURLOPT_SSL_VERIFYPEER, TRUE); // It does look like verification works now.
 			curl_setopt($this->apiRequest, CURLOPT_USERPWD, "$apiUser:$apiPass"); // Pass the creds
+			
+			if(is_array($paramsArray)) // Pass along any parameters upon instantiation
+			{
+				$this->apiRequestBody['params'] = $paramsArray;
+			}
 		}
 		
 		/**
