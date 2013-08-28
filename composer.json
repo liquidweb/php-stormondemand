@@ -1,0 +1,12 @@
+{
+	"name":	"liquidweb/php-stormondemand",
+	"description":	"PHP bindings for the StormOnDemand API",
+	"homepage":	"https://github.com/liquidweb/php-stormondemand",
+	"license":	"Apache-2.0",
+	"require": {
+		"ext-curl":	"*"
+	},
+	"autoload":	{
+		"files":	["StormAPI.class.php"]
+	}
+}
