@@ -4,11 +4,12 @@
 	$apiUser = "api_user";
 	$apiPass = "api_pass";
 	$apiMethod = "storm/server/list";
+	$paramsArray = FALSE;	
 	$apiVersion = "v1";
 	
-	$storm = new StormAPI($apiUser, $apiPass, $apiMethod, $apiVersion);
+	$storm = new StormAPI($apiUser, $apiPass, $apiMethod, $paramsArray, $apiVersion);
 	
-	$storm->addParam("page_size", "999");
+	$storm->addParam("page_size", 999);
 	$results = $storm->request();
 	
 	foreach($results['items'] as $item)
