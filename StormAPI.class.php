@@ -174,7 +174,7 @@
 			{
 				foreach($apiDocsLocal[$groupElement]['__methods'][$methodElement]['__input'] as $tempKey => $tempValue)
 				{
-					if(isset($tempValue['optional']))
+					if(isset($tempValue['optional']) AND ($tempValue['optional'] == 1))
 					{
 						$methodParams[$tempKey] = "Optional";
 					}
