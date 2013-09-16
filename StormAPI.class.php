@@ -371,7 +371,9 @@
 			
 			if($pathIdx == 0) // Make sure we aren't calling this midway through
 			{
-				return $displayString;
+				$returnString = $displayString;
+				$displayString = NULL; // We need to do this since $displayString is static, and we don't need it to just keep getting appended to...
+				return $returnString;
 			}
 		}
 	}
