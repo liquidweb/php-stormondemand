@@ -111,5 +111,12 @@ API that is being used.
 More of a convenience method that outputs some information that might be useful
 for debugging purposes.
 
-**request()**
-This is the method that makes it all happen. Returns an array.
+**request($displayFriendly = FALSE)**
+The method that makes the actual request.
+
+When passed with $displayFriendly being _FALSE_, an associative array is returned from
+the decoded JSON output from the API.
+
+When $displayFriendly is _TRUE_, the return is an array consisting of two keys, _'raw'_ and _'display'_.
+The "display friendly" version of the output is good when a quick glance at the data is needed, as it is
+displayed in a format with breadcrumbs so you can easilly tell where the data is at.
