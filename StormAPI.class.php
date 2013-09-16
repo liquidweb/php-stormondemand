@@ -174,7 +174,7 @@
 			{
 				foreach($apiDocsLocal[$groupElement]['__methods'][$methodElement]['__input'] as $tempKey => $tempValue)
 				{
-					if(isset($tempValue['optional']))
+					if(isset($tempValue['optional']) AND ($tempValue['optional'] == 1))
 					{
 						$methodParams[$tempKey] = "Optional";
 					}
@@ -300,10 +300,11 @@
 		 * 
 		 * This method makes the call to the Storm Platform API and retrieves the information
 		 * 
-		 * @return array Returns a JSON decoded array of returned information from the API call
+		 * @param boolean $displayFriendly Makes the return an array of two keys, one holding the raw data, the other that holds string for friendly viewing. Defaults to false for backwards compatability
+		 * @return array Returns a JSON decoded array of returned information from the API call or an array containing the decoded data ('raw') as well as a display friendly version of the output ('display')
 		 * 
 		 */
-		function request()
+		function request($displayFriendly = FALSE)
 		{
 			if(isset($this->apiRequestBody['params'])) // We have params
 			{
@@ -315,11 +316,62 @@
 			// Now send the request and get the return on investment
 			try
 			{
-				return json_decode(curl_exec($this->apiRequest), TRUE); // Pull the trigger and get nice pretty arrays of returned data
+				if($displayFriendly)
+				{
+					$return['raw'] = json_decode(curl_exec($this->apiRequest), TRUE); // Pull the trigger and get nice pretty arrays of returned data
+					$return['display'] = $this->cleanArrayDisp($return['raw']); // Get a nice display version of the returned data
+					return $return;
+				}
+				else
+				{
+					return json_decode(curl_exec($this->apiRequest), TRUE); // Pull the trigger and get nice pretty arrays of returned data
+				}
 			}
 			catch (Exception $e)
 			{
 				echo 'Error: ' . $e->getMessage();
+			}
+		}
+		
+		
+		/**
+		 * 
+		 * @param array $array The data array returned from the 
+		 * @returns string A string that displays the data in a friendly way
+		 */
+		private function cleanArrayDisp($array)
+		{
+			static $path; // For when things get... recursive		
+			static $pathIdx = 0; // Keepin it real - for all of it
+			static $displayString; // The string that will be returned to the calling method
+			
+		
+			foreach($array as $key => $value)
+			{
+				if(!is_array($value))
+				{
+					if($pathIdx > 0) // Let's show where this value falls in the scheme of things
+					{
+							$displayString .= '[' . implode("][", $path) . ']';
+					}
+					
+					$displayString .= '[' . $key . ']' . " => " . $value . "\n";
+				}
+				elseif(is_array($value)) // Recursion time!
+				{
+					$pathIdx++; // Increment the path index
+					$path[$pathIdx] = $key;
+					
+					$this->cleanArrayDisp($value);
+		
+					unset($path[$pathIdx]); // Cleanup
+					$pathIdx--;
+				}
+			}
+			
+			if($pathIdx == 0) // Make sure we aren't calling this midway through
+			{
+				return $displayString;
 			}
 		}
 	}
