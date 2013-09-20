@@ -23,7 +23,7 @@
 	{
 		// Let's define attributes
 		private $apiUser, $apiPass, $baseUrl, $apiFormat, $apiFullUri, $apiRequest;
-		private $apiRequestBody, $apiMethod, $apiParams, $apiVersion, $apiPort; 
+		private $apiRequestBody = array(), $apiMethod, $apiParams, $apiVersion, $apiPort; 
 		
 		/**
 		 * 
@@ -66,7 +66,8 @@
 		{
 			if(is_array($paramsArray))
 			{
-				$this->apiRequestBody['params'] = $paramsArray;
+				if (!isset($this->apiRequestBody['params'])) $this->apiRequestBody['params'] = array();
+				$this->apiRequestBody['params'] = array_merge($this->apiRequestBody['params'], $paramsArray);
 				return TRUE;
 			}
 			else
