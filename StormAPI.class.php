@@ -22,7 +22,7 @@
 	class StormAPI
 	{
 		// Let's define attributes
-		private $apiUser, $apiPass, $baseUrl, $apiFormat, $apiFullUri, $apiRequest;
+		private $baseUrl, $apiFormat, $apiFullUri, $apiRequest;
 		private $apiRequestBody = array(), $apiMethod, $apiParams, $apiVersion, $apiPort; 
 		
 		/**
@@ -36,10 +36,6 @@
 		 */
 		public function __construct($apiUser, $apiPass, $apiMethod, $paramsArray = FALSE, $apiVersion = "v1")
 		{	
-			//$this->apiUser = $apiUser;
-			//$this->apiPass = $apiPass;
-			//$this->apiMethod = $apiMethod;
-			//$this->version = $apiVersion;
 			$this->baseUrl = 'https://api.stormondemand.com/';
 			$this->apiFormat = 'json';
 			$this->apiPort = 443;
