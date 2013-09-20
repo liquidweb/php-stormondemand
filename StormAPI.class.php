@@ -34,7 +34,7 @@
 		 * @param string $apiVersion The API version to use. Defaults to v1
 		 * 
 		 */
-		function __construct($apiUser, $apiPass, $apiMethod, $paramsArray = FALSE, $apiVersion = "v1")
+		public function __construct($apiUser, $apiPass, $apiMethod, $paramsArray = FALSE, $apiVersion = "v1")
 		{	
 			//$this->apiUser = $apiUser;
 			//$this->apiPass = $apiPass;
@@ -65,7 +65,7 @@
 		 * @return bool TRUE for success, FALSE for failure
 		 * 
 		 */
-		function bulkParams($paramsArray)
+		public function bulkParams($paramsArray)
 		{
 			if(is_array($paramsArray))
 			{
@@ -85,7 +85,7 @@
 		 * @return null Appends the parameter and value to the array being used for storing the API method's parameters, or over writes if already set
 		 * 
 		 */
-		function addParam($parameter, $value)
+		public function addParam($parameter, $value)
 		{
 			$this->apiRequestBody['params'][$parameter] = $value;
 		}
@@ -96,7 +96,7 @@
 		 * @return bool Will return TRUE if successful, FALSE if not (such as the parameter didn't actually exist) 
 		 * 
 		 */
-		function removeParam($parameter)
+		public function removeParam($parameter)
 		{
 			if(isset($this->apiRequestBody['params'][$parameter]))
 			{
@@ -118,7 +118,7 @@
 		 * @return array|bool Returns an array of the currently set parameters, FALSE if none are set
 		 * 
 		 */
-		function listParams()
+		public function listParams()
 		{
 			if(isset($this->apiRequestBody['params']) AND (count($this->apiRequestBody['params']) > 0))
 			{
@@ -135,7 +135,7 @@
 		 * @return array|bool Returns an array of possible parameters and their optionality for the current method, FALSE if no parameters
 		 * 
 		 */
-		 function listMethodParams()
+		 public function listMethodParams()
 		 {
 			$this->apiDocs = file_get_contents("http://www.liquidweb.com/StormServers/api/docs/" . $this->apiVersion . "/docs.json");
 			$this->apiDocs = json_decode($this->apiDocs, TRUE);
@@ -212,7 +212,7 @@
 		 * @return null Clears the array being used for storing the API method's parameters
 		 * 
 		 */
-		function clearParams()
+		public function clearParams()
 		{
 			unset($this->apiRequestBody);
 			$this->apiRequestBody = array(); // Initialize blank, so that a warning doesn't get thrown about the array being undefined
@@ -226,7 +226,7 @@
 		 * @return null
 		 * 
 		 */
-		function newMethod($apiMethod, $clearparams = TRUE) // Clears out parameters by default, since they may not apply now
+		public function newMethod($apiMethod, $clearparams = TRUE) // Clears out parameters by default, since they may not apply now
 		{
 			if($clearparams == TRUE)
 			{
@@ -245,7 +245,7 @@
 		 * @return string Returns a string containing the server, port, method, and parameters currently set
 		 * 
 		 */
-		function debugInfo()
+		public function debugInfo()
 		{
 			$this->debugVars = "Full URI: " . $this->apiFullUri . "\n";
 			$this->debugVars .= "Port: " . $this->apiPort . "\n";
@@ -281,7 +281,7 @@
 		 *
 		 * @return array Returns an array of the available API methods based on the version supplied
 		 */
-		function listMethods()
+		public function listMethods()
 		{
 			$this->apiDocs = file_get_contents("http://www.liquidweb.com/StormServers/api/docs/" . $this->apiVersion . "/docs.json");
 			$this->apiDocs = json_decode($this->apiDocs, TRUE);
@@ -304,7 +304,7 @@
 		 * @return array Returns a JSON decoded array of returned information from the API call or an array containing the decoded data ('raw') as well as a display friendly version of the output ('display')
 		 * 
 		 */
-		function request($displayFriendly = FALSE)
+		public function request($displayFriendly = FALSE)
 		{
 			if(isset($this->apiRequestBody['params'])) // We have params
 			{
