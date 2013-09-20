@@ -53,10 +53,7 @@
 			curl_setopt($this->apiRequest, CURLOPT_SSL_VERIFYPEER, TRUE); // It does look like verification works now.
 			curl_setopt($this->apiRequest, CURLOPT_USERPWD, "$apiUser:$apiPass"); // Pass the creds
 			
-			if(is_array($paramsArray)) // Pass along any parameters upon instantiation
-			{
-				$this->apiRequestBody['params'] = $paramsArray;
-			}
+			$this->bulkParams($paramsArray);
 		}
 		
 		/**
