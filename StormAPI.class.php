@@ -303,7 +303,7 @@
 		 */
 		public function request($displayFriendly = FALSE)
 		{
-			if(isset($this->apiRequestBody['params'])) // We have params
+			if(isset($this->apiRequestBody['params']) AND count(($this->apiRequestBody['params']) > 0)) // We have params
 			{
 				curl_setopt($this->apiRequest, CURLOPT_POST, TRUE); //POST method since we'll be feeding params
 				curl_setopt($this->apiRequest, CURLOPT_HTTPHEADER, Array('Content-type: application/json')); // Since we'll be using JSON
