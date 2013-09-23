@@ -62,7 +62,10 @@
 		{
 			if(is_array($paramsArray))
 			{
-				if (!isset($this->apiRequestBody['params'])) $this->apiRequestBody['params'] = array();
+				if (!isset($this->apiRequestBody['params']))
+				{
+					$this->apiRequestBody['params'] = array();
+				}
 				$this->apiRequestBody['params'] = array_merge($this->apiRequestBody['params'], $paramsArray);
 				return TRUE;
 			}
