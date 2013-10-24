@@ -2,27 +2,19 @@
 	/**
 	 * This file contains the StormAPI Class for working with Liquid Web's Storm Platorm API
 	 * 
-	 * @package StormAPI
-	 * @license http://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
-	 * @author Jason Gillman Jr <jgillman@liquidweb.com>
-	 * 
-	 */
-
-	/**
-	 * This class allows for making calls to the Storm Platform API.
-	 * 
 	 * The class will perform automatic encoding and decoding of JSON for passing and retrieving information from the Storm Platform API
 	 * The returned output is an array
 	 * View the Storm Platform API documentation for a listing of methods: http://www.liquidweb.com/StormServers/api/docs/v1/
 	 * 
 	 * @author Jason Gillman Jr <jgillman@liquidweb.com>
 	 * @package StormAPI
+	 * @license http://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
 	 *
 	 */
 	class StormAPI
 	{
 		// Let's define attributes
-		private $baseUrl, $apiFormat, $apiFullUri, $apiRequest;
+		private $baseUrl, $apiFormat, $apiFullUri, $apiRequest, $storedRequests = array();
 		private $apiRequestBody = array(), $apiMethod, $apiParams, $apiVersion, $apiPort; 
 		
 		/**
@@ -277,6 +269,7 @@
 		 * This method will return a list of available API methods for the API version in use
 		 *
 		 * @return array Returns an array of the available API methods based on the version supplied
+		 * 
 		 */
 		public function listMethods()
 		{
@@ -330,11 +323,103 @@
 			}
 		}
 		
+		/**
+		 * 
+		 * This method will make an API request and store it for later use and indexed by a user defined key.
+		 * 
+		 * If the key is already in use, it will be overwritten.
+		 * However, if it is overwritten, the overwritten data will be returned with the result array with the key 'overwrittenData'.
+		 * 
+		 * @param string|integer $key They user defined key to be used for storing the result
+		 * @return array Returns an array containing the key used, the data returned from the request() call, and 'overwrittenData', if applicable.
+		 * 
+		 */
+		public function storeRequest($key)
+		{
+			if(!isset($key)) // Just exit the method if the param wasn't supplied
+			{
+				exit;
+			}
+			
+			$return['key'] = $key;
+			if(isset($this->storedRequests[$key])) // Key already exists, so assign existing data to the 'overwrittenData' index
+			{
+				$return['overwrittenData'] = $this->storedRequests[$key];
+				unset($this->storedRequests[$key]);
+			}
+
+			$this->storedRequests[$key] = $this->request(FALSE);
+			$return['result'] = $this->storedRequests[$key];
+			
+			return $return;
+		}
 		
 		/**
 		 * 
-		 * @param array $array The data array returned from the 
-		 * @returns string A string that displays the data in a friendly way
+		 * This method returns one or all of the stored API requests 
+		 * 
+		 * @param bool|string|integer $key An optional key to pull a specific stored request. Returns all requests if set to FALSE
+		 * @param bool $displayFriendly Used to determine if "display friendly" output is desired
+		 * @return array
+		 * 
+		 */
+		public function returnRequests($key = FALSE, $displayFriendly = FALSE)
+		{
+			if($key AND !is_bool($key))
+			{
+				$return['raw'] = $this->storedRequests[$key];
+			}
+			else
+			{
+				$return['raw'] = $this->storedRequests;
+			}
+			
+			// Friendly display?
+			if($displayFriendly)
+			{
+				$return['display'] = $this->cleanArrayDisp($return['raw']);
+			}
+			
+			return $return;
+		}
+		
+		/**
+		 * 
+		 * This method returns the set keys for storedRequests
+		 * 
+		 * @return array An array of the keys in $this->storedRequests
+		 * 
+		 */
+		public function listRequestKeys()
+		{
+			return array_keys($this->storedRequests);
+		}
+		
+		/**
+		 * 
+		 * This method removes a stored request
+		 * 
+		 * @param string|integer $key The key for the particular request you want removed
+		 * @return string Returns a message indicating that a particular request was removed
+		 */
+		public function removeRequest($key)
+		{
+			if(!isset($key)) // Just exit the method if the param wasn't supplied
+			{
+				exit;
+			}
+			
+			unset($this->storedRequests[$key]);
+			
+			$return = "The result with the key of " . $key . " has been unset\n";
+			return $return;
+		}
+		
+		/**
+		 * 
+		 * @param array $array The data array returned from the request
+		 * @return string A string that displays the data in a friendly way
+		 * 
 		 */
 		private function cleanArrayDisp($array)
 		{
