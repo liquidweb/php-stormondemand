@@ -120,3 +120,17 @@ the decoded JSON output from the API.
 When $displayFriendly is _TRUE_, the return is an array consisting of two keys, _'raw'_ and _'display'_.
 The "display friendly" version of the output is good when a quick glance at the data is needed, as it is
 displayed in a format with breadcrumbs so you can easilly tell where the data is at.
+
+**storeRequest($key)**
+This method stores the results of an API request by the supplied key.
+
+**returnRequests($key, $displayFriendly)**
+This method returns all of the stored requests if $key is not supplied, or the request for a particular supplied key.
+
+The $displayFriendly argument functions just like its counterpart in the request() method.
+
+**listRequestKeys()**
+This method lists they keys for stored requests.
+
+**removeRequest($key)**
+This method removes the stored request for the key given.
