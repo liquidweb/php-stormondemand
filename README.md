@@ -71,9 +71,9 @@ Alternatively, the parameter(s) can be passed upon instantiation as so:
 
 PHPDoc blocks are utilized so that code hinting can be used if your IDE supports it.
 
-### Library Method Summary ###
-The following is just a quick summary of methods that the library provides,
-their functions, and their parameters.
+### Instantiated Method Summary ###
+The following is just a quick summary of methods that the library provides
+when a StormAPI object is instatiated, their function, and their parameters.
 
 **__construct($apiUser, $apiPass, $apiMethod, $paramsArray = FALSE, $apiVersion = "v1")**
 The magic constructor method that is called upon instantiation of a **_StormAPI_** object.
@@ -140,9 +140,9 @@ The following are static methods that don't require an instantiated object to ru
 They have equivalent wrapper methods for instantiated objects to take currently set values as well.
 
 **listMethodParamsStatic($apiMethod, $apiVersion = 'v1')**
- Parses the API documentation and provides parameters associated with the method
- and versionthat is passed in. Additionally, it shows the optionality of the parameter.
+Parses the API documentation and provides parameters associated with the method
+and version that is passed in. Additionally, it shows the optionality of the parameter.
  
  **listMethodsStatic($apiVersion = 'v1')**
 Returns a listing of all the API methods available for the version of the 
-API that is being passed in.
+API that is passed in.
