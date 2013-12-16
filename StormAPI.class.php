@@ -121,18 +121,19 @@
 		
 		/**
 		 * 
+		 * This is the static method that can be called from anywhere
 		 * @return array|bool Returns an array of possible parameters and their optionality for the current method, FALSE if no parameters
 		 * 
 		 */
-		 public function listMethodParams()
+		 static function listMethodParamsStatic($apiMethod, $apiVersion = 'v1')
 		 {
-			$this->apiDocs = file_get_contents("http://www.liquidweb.com/StormServers/api/docs/" . $this->apiVersion . "/docs.json");
-			$this->apiDocs = json_decode($this->apiDocs, TRUE);
+			$apiDocs = file_get_contents("http://www.liquidweb.com/StormServers/api/docs/" . $apiVersion . "/docs.json");
+			$apiDocs = json_decode($apiDocs, TRUE);
 			
-			$apiDocsLocal = array_change_key_case($this->apiDocs); // Lowercase the groupings
+			$apiDocsLocal = array_change_key_case($apiDocs); // Lowercase the groupings
 			
 			// Split up the group and method so we can properly find it in the JSON file
-			$methodSplitter = explode("/", $this->apiMethod);
+			$methodSplitter = explode("/", $apiMethod);
 			$splitterCount = count($methodSplitter) - 2; // This will determine the index of the $methodSplitter array that has the last group element
 			$groupElement = ""; // Empty init to prevent complaints
 			$i = 0;
@@ -194,6 +195,17 @@
 			{
 				return FALSE;
 			}
+		 }
+		 
+		 /**
+		  *
+		  * This is the public method that can be called from an instantiated object and will automatically pass the current API version and method
+		  * @return array|bool Returns an array of possible parameters and their optionality for the current method, FALSE if no parameters
+		  *
+		  */
+		 public function listMethodParams()
+		 {
+		 	return self::listMethodParamsStatic($this->apiMethod, $this->apiVersion);
 		 }
 		
 		/**
@@ -266,24 +278,36 @@
 		
 		/**
 		 *
-		 * This method will return a list of available API methods for the API version in use
+		 * This static method will return a list of available API methods for the API version passed in
 		 *
 		 * @return array Returns an array of the available API methods based on the version supplied
 		 * 
 		 */
-		public function listMethods()
+		static function listMethodsStatic($apiVersion = 'v1')
 		{
-			$this->apiDocs = file_get_contents("http://www.liquidweb.com/StormServers/api/docs/" . $this->apiVersion . "/docs.json");
-			$this->apiDocs = json_decode($this->apiDocs, TRUE);
+			$apiDocs = file_get_contents("http://www.liquidweb.com/StormServers/api/docs/" . $apiVersion . "/docs.json");
+			$apiDocs = json_decode($apiDocs, TRUE);
 		
-			foreach($this->apiDocs as $groupName => $group)
+			foreach($apiDocs as $groupName => $group)
 			{
 				foreach($group['__methods'] as $methodName => $methodSpecs)
 				{
-					$this->methodList[$groupName][] = $methodName;
+					$methodList[$groupName][] = $methodName;
 				}
 			}
-			return $this->methodList;
+			return $methodList;
+		}
+		
+		/**
+		 *
+		 * This wrapper method will return a list of available API methods for the API version in use by the instantiated object
+		 *
+		 * @return array Returns an array of the available API methods based on the version supplied
+		 *
+		 */
+		public function listMethods()
+		{
+			return self::listMethodsStatic($this->apiVersion);
 		}
 		
 		/**
