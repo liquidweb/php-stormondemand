@@ -134,3 +134,15 @@ This method lists they keys for stored requests.
 
 **removeRequest($key)**
 This method removes the stored request for the key given.
+
+### Static Method Summary ###
+The following are static methods that don't require an instantiated object to run.
+They have equivalent wrapper methods for instantiated objects to take currently set values as well.
+
+**listMethodParamsStatic($apiMethod, $apiVersion = 'v1')**
+ Parses the API documentation and provides parameters associated with the method
+ and versionthat is passed in. Additionally, it shows the optionality of the parameter.
+ 
+ **listMethodsStatic($apiVersion = 'v1')**
+Returns a listing of all the API methods available for the version of the 
+API that is being passed in.
