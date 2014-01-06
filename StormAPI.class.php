@@ -39,6 +39,7 @@
 			curl_setopt($this->apiRequest, CURLOPT_RETURNTRANSFER, TRUE); // Don't dump directly to output
 			curl_setopt($this->apiRequest, CURLOPT_PORT, $this->apiPort); // The port to call to.
 			curl_setopt($this->apiRequest, CURLOPT_SSL_VERIFYPEER, TRUE); // It does look like verification works now.
+			curl_setopt($this->apiRequest, CURLOPT_SSL_VERIFYHOST, 2); // Further verification..
 			curl_setopt($this->apiRequest, CURLOPT_USERPWD, "$apiUser:$apiPass"); // Pass the creds
 			
 			$this->bulkParams($paramsArray);
