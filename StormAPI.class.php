@@ -1,4 +1,5 @@
 <?php
+namespace LiquidWeb;
 	/**
 	 * This file contains the StormAPI Class for working with Liquid Web's Storm Platorm API
 	 * 
