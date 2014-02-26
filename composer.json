@@ -3,10 +3,20 @@
 	"description":	"PHP bindings for the StormOnDemand API",
 	"homepage":	"https://github.com/liquidweb/php-stormondemand",
 	"license":	"Apache-2.0",
-	"require": {
+	"authors":
+	[
+		{
+			"name": "Jason Gillman Jr.",
+			"email": "jgillman@liquidweb.com",
+			"role": "Developer"
+		}
+	],
+	"require":
+	{
 		"ext-curl":	"*"
 	},
-	"autoload":	{
+	"autoload":
+	{
 		"files":	["StormAPI.class.php"]
 	}
 }
