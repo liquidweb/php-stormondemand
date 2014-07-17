@@ -15,7 +15,7 @@
 	$apiPass = 'pass';
 	echo "Initial Method: "; $api_method = trim(fgets(STDIN));
 	
-	$storm = new StormAPI($apiUser, $apiPass, $api_method);
+	$storm = new \LiquidWeb\StormAPI($apiUser, $apiPass, $api_method);
 	
 	// Menu
 	while(!isset($stop))

@@ -33,7 +33,7 @@ shows basic use:
 	$paramsArray = FALSE;
 	$apiVersion = "v1";
 	
-	$storm = new StormAPI($apiUser, $apiPass, $apiMethod, $paramsArray, $apiVersion);
+	$storm = new \LiquidWeb\StormAPI($apiUser, $apiPass, $apiMethod, $paramsArray, $apiVersion);
 	
 	$storm->addParam("page_size", 999);
 	$results = $storm->request();
@@ -58,7 +58,7 @@ Alternatively, the parameter(s) can be passed upon instantiation as so:
 	$paramsArray = array('page_size' => 999);
 	$apiVersion = "v1";
 	
-	$storm = new StormAPI($apiUser, $apiPass, $apiMethod, $paramsArray, $apiVersion);
+	$storm = new \LiquidWeb\StormAPI($apiUser, $apiPass, $apiMethod, $paramsArray, $apiVersion);
 	
 	$results = $storm->request();
 	

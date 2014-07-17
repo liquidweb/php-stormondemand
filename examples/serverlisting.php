@@ -7,7 +7,7 @@
 	$paramsArray = FALSE;	
 	$apiVersion = "v1";
 	
-	$storm = new StormAPI($apiUser, $apiPass, $apiMethod, $paramsArray, $apiVersion);
+	$storm = new \LiquidWeb\StormAPI($apiUser, $apiPass, $apiMethod, $paramsArray, $apiVersion);
 	
 	$storm->addParam("page_size", 999);
 	$results = $storm->request();
